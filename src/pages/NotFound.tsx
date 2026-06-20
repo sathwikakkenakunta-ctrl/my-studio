@@ -1,0 +1,4 @@
+import { Button } from '../components/ui/Button';
+import { Container } from '../components/ui/Section';
+import { Seo } from '../components/ui/Seo';
+export default function NotFound(){return <><Seo title="Page not found" description="The requested page could not be found."/><section className="grid min-h-[85vh] place-items-center pt-28 text-center"><Container><span className="font-display text-[clamp(8rem,28vw,24rem)] leading-none tracking-[-.08em] text-violet">404</span><h1 className="font-display text-4xl tracking-[-.04em]">This page drifted out of orbit.</h1><p className="mx-auto mt-4 max-w-md text-[var(--muted)]">The link may be old, or the page may never have existed. Either way, the homepage knows the route back.</p><Button to="/" className="mt-8">Return home</Button></Container></section></>}
