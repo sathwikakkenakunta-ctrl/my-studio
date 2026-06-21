@@ -2,4 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://sathwik-studio.vercel.app/sitemap.xml
-Host: https://sathwik-studio.vercel.app
