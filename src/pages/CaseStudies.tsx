@@ -8,12 +8,12 @@ import { projects } from '../data/content';
 export default function CaseStudies() {
   return <>
     <Seo title="Projects" description="Selected websites, dashboards, and SaaS applications built by Sathwik Akkenakunta."/>
-    <PageHero eyebrow="Selected work" title="Real products, designed down to the details." text="Four complete frontend products spanning healthcare, hospitality, property, and appointment scheduling."/>
+    <PageHero eyebrow="Selected work" title="Real products, designed down to the details." text="Complete React products spanning portfolio architecture, healthcare, hospitality, property, and appointment scheduling."/>
     <section className="pb-28 sm:pb-32"><Container>
       <div className="grid gap-5 lg:grid-cols-2">{projects.map((p) =>
-        <Link to={`/case-studies/${p.slug}`} key={p.slug} className="glass-card focus-ring group rounded-3xl p-4">
+        <Link to={`/project/${p.slug}`} key={p.slug} className="glass-card focus-ring group rounded-3xl p-4">
           <div className="relative aspect-[16/10] overflow-hidden rounded-2xl bg-[var(--surface-2)]">
-            <img src={p.image} alt={`${p.title} interface preview`} loading="lazy" className="h-full w-full object-cover object-top transition duration-700 group-hover:scale-[1.035]"/>
+            <img src={p.image} alt={`${p.title} responsive web application interface preview`} width="1440" height="980" loading="lazy" decoding="async" className="h-full w-full object-cover object-top transition duration-700 group-hover:scale-[1.035]"/>
             <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent"/>
             <span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-white backdrop-blur-md">{p.status}</span>
             <span className="absolute bottom-4 right-4 grid size-11 place-items-center rounded-full bg-white text-ink shadow-xl transition group-hover:-translate-y-1 group-hover:translate-x-1"><ArrowUpRight size={18} aria-hidden="true"/></span>

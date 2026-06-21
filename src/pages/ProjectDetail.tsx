@@ -1,38 +1,32 @@
-import { Check, Github } from 'lucide-react';
-import { Navigate, useParams } from 'react-router-dom';
+import { ArrowLeft, Check, Github, Monitor, Smartphone, Tablet } from 'lucide-react';
+import { Link, useParams } from 'react-router-dom';
 import { PageHero } from '../components/sections/PageHero';
 import { Button } from '../components/ui/Button';
 import { Container } from '../components/ui/Section';
 import { Seo } from '../components/ui/Seo';
 import { projects } from '../data/content';
+import { site } from '../data/site';
 
-export default function ProjectDetail() {
-  const { slug } = useParams();
-  const project = projects.find((item) => item.slug === slug);
-  if (!project) return <Navigate to="/case-studies" replace/>;
-
-  return <>
-    <Seo title={project.title} description={`${project.title}: ${project.description}`}/>
-    <PageHero eyebrow={`${project.type} · ${project.status}`} title={project.title} text={project.description}/>
-    <section className="pb-28"><Container>
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">{[
-        ['Role', project.role], ['Timeline', project.timeline], ['Scope', project.result], ['Status', project.status],
-      ].map(([key,value]) => <div className="glass-card rounded-2xl p-5 sm:p-8" key={key}><span className="text-xs text-[var(--muted)]">{key}</span><b className="mt-3 block font-display text-lg sm:text-xl">{value}</b></div>)}</div>
-
-      <div className="glass-card mt-6 overflow-hidden rounded-3xl p-2 sm:p-3"><div className="overflow-hidden rounded-[1.15rem] bg-[var(--surface-2)]"><img src={project.image} alt={`${project.title} desktop interface`} className="aspect-[16/10] h-full w-full object-cover object-top"/></div></div>
-
-      <div className="mt-8 flex flex-wrap gap-3">
-        {project.liveUrl && <Button href={project.liveUrl} variant="primary">View live site</Button>}
-        <Button href={project.githubUrl} variant="secondary"><Github size={17}/> View GitHub</Button>
-        {!project.liveUrl && <Button to="/contact" variant="outline">Contact me to design yours</Button>}
-      </div>
-
-      <div className="mx-auto mt-20 grid max-w-5xl gap-10 sm:mt-24 md:grid-cols-2"><div><span className="eyebrow">The challenge</span><h2 className="mt-5 font-display text-4xl tracking-[-.04em]">Make a complex product feel immediately clear.</h2></div><p className="leading-8 text-[var(--muted)]">{project.challenge}</p></div>
-      <div className="mx-auto mt-24 grid max-w-5xl gap-12 md:grid-cols-2"><div><span className="eyebrow">The solution</span><h2 className="mt-5 font-display text-4xl tracking-[-.04em]">One considered system, from first click to daily work.</h2></div><div><p className="leading-8 text-[var(--muted)]">{project.solution}</p><div className="mt-7 flex flex-wrap gap-2">{project.stack.map((technology) => <span className="rounded-full border border-[var(--border)] px-4 py-2 text-xs" key={technology}>{technology}</span>)}</div></div></div>
-
-      <div className="mt-24 grid gap-5 md:grid-cols-3">{project.highlights.map((highlight) => <div className="glass-card rounded-2xl p-7" key={highlight}><span className="grid size-10 place-items-center rounded-full" style={{background:`${project.color}22`,color:project.color}}><Check size={18}/></span><h3 className="mt-8 font-display text-xl">{highlight}</h3></div>)}</div>
-
-      <div className="gradient-panel mt-24 rounded-3xl p-8 sm:p-14"><span className="text-xs font-bold uppercase tracking-[.15em]">Have a product in mind?</span><p className="mt-5 max-w-4xl font-display text-4xl font-medium tracking-[-.04em] sm:text-6xl">Let’s turn your idea into a clear, polished digital experience.</p><Button to="/contact" variant="secondary" className="mt-8 border-white/20 bg-white text-ink">Contact me to design yours</Button></div>
-    </Container></section>
-  </>;
+export default function ProjectDetail(){
+  const {slug}=useParams(); const project=projects.find(item=>item.slug===slug);
+  if(!project)return <Missing/>;
+  const related=projects.filter(item=>item.slug!==slug).slice(0,3); const url=`${site.url}/project/${project.slug}`;
+  const schema=[{ '@context':'https://schema.org','@type':['CreativeWork','SoftwareSourceCode'],name:project.title,description:project.description,url,codeRepository:project.githubUrl,runtimePlatform:'Web',programmingLanguage:project.stack,author:{'@id':`${site.url}/#person`},image:`${site.url}${project.image}` },{ '@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Home',item:site.url},{'@type':'ListItem',position:2,name:'Projects',item:`${site.url}/projects`},{'@type':'ListItem',position:3,name:project.title,item:url}]}];
+  return <><Seo title={`${project.title} Case Study`} description={`${project.title} case study: ${project.description}`} image={project.image} type="article" schema={schema}/><PageHero eyebrow={`${project.type} · ${project.status}`} title={project.title} text={project.description}/><section className="pb-28"><Container>
+    <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">{[['Role',project.role],['Timeline',project.timeline],['Scope',project.result],['Status',project.status]].map(([key,value])=><div className="glass-card rounded-2xl p-5 sm:p-8" key={key}><span className="text-xs text-[var(--muted)]">{key}</span><b className="mt-3 block font-display text-lg sm:text-xl">{value}</b></div>)}</div>
+    <figure className="glass-card mt-6 overflow-hidden rounded-3xl p-2 sm:p-3"><div className="overflow-hidden rounded-[1.15rem] bg-[var(--surface-2)]"><img src={project.image} alt={`${project.title} desktop product interface showing its primary user experience`} width="1440" height="980" fetchPriority="high" decoding="async" className="aspect-[16/10] h-full w-full object-cover object-top"/></div><figcaption className="px-4 py-3 text-xs text-[var(--muted)]">Primary desktop experience for {project.title}.</figcaption></figure>
+    <div className="mt-8 flex flex-wrap gap-3">{project.liveUrl&&<Button href={project.liveUrl}>View live demo</Button>}<Button href={project.githubUrl} variant="secondary"><Github size={17}/>View source on GitHub</Button><Button to="/projects" variant="outline"><ArrowLeft size={16}/>Back to projects</Button></div>
+    <CaseSection eyebrow="Overview & problem" title="Turning a complex workflow into a focused product." text={project.challenge}/>
+    <CaseSection eyebrow="Research" title="Map the decisions before drawing the interface." text={`I examined the expectations of people using ${project.type.toLowerCase()}, mapped their highest-frequency tasks, and separated essential operational signals from secondary detail. Competitor patterns informed the baseline; the final hierarchy was shaped around speed, confidence, and responsive use.`}/>
+    <CaseSection eyebrow="Design process" title="A system built from hierarchy, states, and reusable patterns." text={`The experience moved from content and workflow mapping into responsive wireframes, visual tokens, interaction states, and production components. For ${project.title}, visual polish was tested against clarity, keyboard access, contrast, and small-screen behavior.`}/>
+    <div className="mx-auto mt-24 max-w-5xl"><p className="eyebrow">Architecture & technology stack</p><h2 className="mt-5 max-w-3xl font-display text-4xl tracking-[-.04em]">Independent product modules, one coherent frontend system.</h2><p className="mt-6 max-w-3xl leading-8 text-[var(--muted)]">Route-level screens keep features understandable while shared components enforce typography, spacing, navigation, feedback, and accessibility. State stays close to the workflows that own it, reducing coupling as the product grows.</p><div className="mt-7 flex flex-wrap gap-2">{project.stack.map(technology=><span className="rounded-full border border-[var(--border)] px-4 py-2 text-xs" key={technology}>{technology}</span>)}</div></div>
+    <div className="mt-24"><p className="eyebrow">Key features</p><div className="mt-7 grid gap-5 md:grid-cols-3">{project.highlights.map(highlight=><div className="glass-card rounded-2xl p-7" key={highlight}><span className="grid size-10 place-items-center rounded-full" style={{background:`${project.color}22`,color:project.color}}><Check size={18}/></span><h3 className="mt-8 font-display text-xl">{highlight}</h3><p className="mt-3 text-sm leading-6 text-[var(--muted)]">Designed as a responsive, accessible workflow with clear states and purposeful feedback.</p></div>)}</div></div>
+    <CaseSection eyebrow="Challenge & solution" title="Complexity stays behind the interface." text={project.solution}/>
+    <div className="mt-24"><p className="eyebrow">Responsive gallery</p><h2 className="mt-5 font-display text-4xl tracking-[-.04em]">One product across desktop, tablet, and mobile.</h2><div className="mt-8 grid gap-4 lg:grid-cols-3">{[[Monitor,'Desktop preview','aspect-[16/10]'],[Tablet,'Tablet preview','aspect-[4/3]'],[Smartphone,'Mobile preview','aspect-[3/4]']].map(([Icon,label,ratio],i)=>{const Device=Icon as typeof Monitor;return <figure className="glass-card rounded-3xl p-3" key={label as string}><div className={`${ratio} overflow-hidden rounded-2xl bg-[var(--surface-2)]`}><img src={project.image} alt={`${project.title} ${String(label).toLowerCase()}`} width="1440" height="980" loading="lazy" decoding="async" className={`h-full w-full object-cover object-top ${i===2?'object-left':''}`}/></div><figcaption className="flex items-center gap-2 px-3 py-4 text-sm"><Device size={16}/>{label as string}</figcaption></figure>})}</div></div>
+    <div className="mt-24 grid gap-5 md:grid-cols-3">{[['Performance highlights','Route code splitting, stable image dimensions, efficient motion, and production asset optimization support fast loading and interaction.'],['Accessibility','Semantic landmarks, logical headings, visible focus, keyboard navigation, contrast, and reduced-motion behavior are built in.'],['Future improvements','Production APIs, deeper user testing, field analytics, authentication hardening, and expanded domain workflows are the next meaningful steps.']].map(([title,text])=><section className="glass-card rounded-2xl p-7" key={title}><h2 className="font-display text-2xl">{title}</h2><p className="mt-4 text-sm leading-7 text-[var(--muted)]">{text}</p></section>)}</div>
+    <CaseSection eyebrow="Outcome" title="A portfolio-ready product with a credible path to production." text={`${project.title} demonstrates responsive web application development, UI/UX judgment, component architecture, accessibility, and performance-aware implementation in a complete, navigable product.`}/>
+    <section className="mt-24"><h2 className="font-display text-3xl">Related projects</h2><div className="mt-6 grid gap-4 md:grid-cols-3">{related.map(item=><Link className="glass-card focus-ring rounded-2xl p-5" to={`/project/${item.slug}`} key={item.slug}><span className="text-xs text-violet">{item.type}</span><h3 className="mt-3 font-display text-xl">{item.title}</h3><p className="mt-2 text-sm text-[var(--muted)]">Explore the {item.title} case study</p></Link>)}</div></section>
+  </Container></section></>;
 }
+function CaseSection({eyebrow,title,text}:{eyebrow:string;title:string;text:string}){return <section className="mx-auto mt-24 grid max-w-5xl gap-8 md:grid-cols-2"><div><p className="eyebrow">{eyebrow}</p><h2 className="mt-5 font-display text-4xl tracking-[-.04em]">{title}</h2></div><p className="leading-8 text-[var(--muted)]">{text}</p></section>}
+function Missing(){return <><Seo title="Project not found" description="The requested project case study could not be found." noIndex/><section className="grid min-h-[70vh] place-items-center pt-28 text-center"><div><h1 className="font-display text-5xl">Project not found</h1><Link className="mt-6 inline-block text-violet" to="/projects">Browse all projects</Link></div></section></>}

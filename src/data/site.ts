@@ -6,6 +6,10 @@ export const site = {
   location: 'Telangana, India',
   email: 'sathwikakkenakunta@gmail.com',
   github: 'https://github.com/sathwikakkenakunta-ctrl',
+  url: (import.meta.env.VITE_SITE_URL || 'https://my-studio-sathwik.vercel.app').replace(/\/$/, ''),
+  locale: 'en_IN',
+  themeColor: '#09090c',
+  ogImage: '/og/sathwik-dev.png',
   description: 'Sathwik Akkenakunta is a Full Stack Web Developer from Telangana, India, building modern websites, responsive dashboards, and scalable SaaS applications.',
   skills: ['React', 'Tailwind CSS', 'JavaScript', 'HTML', 'CSS', 'Git', 'GitHub', 'Responsive Design', 'UI/UX', 'Performance Optimization'],
 } as const;

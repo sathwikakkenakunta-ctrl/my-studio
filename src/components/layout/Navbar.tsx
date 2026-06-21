@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Menu, Moon, Sun, X } from 'lucide-react';
+import { Menu, Moon, Search, Sun, X } from 'lucide-react';
 import { Link, NavLink } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Button } from '../ui/Button';
@@ -20,6 +20,7 @@ export function Navbar() {
       <Link to="/" className="focus-ring flex min-w-0 items-center gap-2 rounded-lg font-display text-base font-bold tracking-[-.04em] sm:text-lg"><span className="grid size-8 shrink-0 place-items-center rounded-full bg-[linear-gradient(135deg,#b69cff,#6b7bff_55%,#5ed9ce)] text-xs text-ink shadow-[0_0_22px_rgba(127,105,247,.36)]" aria-hidden="true">SA</span><span className="truncate">SATHWIK<span className="text-[var(--muted)]">/DEV</span></span></Link>
       <div className="hidden items-center gap-7 md:flex">{nav.map(([label, path]) => <NavLink key={path} to={path} className={({isActive}) => `focus-ring rounded-md py-2 text-xs font-bold uppercase tracking-[.12em] transition-colors hover:text-[var(--text)] ${isActive ? 'nav-active' : 'text-[var(--muted)]'}`}>{label}</NavLink>)}</div>
       <div className="flex items-center gap-2">
+        <Link to="/search" aria-label="Search projects and articles" className="focus-ring grid size-11 shrink-0 place-items-center rounded-full border border-[var(--glass-border)] bg-[var(--glass)] text-[var(--text)]"><Search size={18} aria-hidden="true"/></Link>
         <button type="button" aria-label={light ? 'Switch to dark theme' : 'Switch to light theme'} aria-pressed={light} className="focus-ring grid size-11 shrink-0 place-items-center rounded-full border border-[var(--glass-border)] bg-[var(--glass)] text-[var(--text)] shadow-[inset_0_1px_0_var(--glass-highlight)] transition hover:border-violet hover:shadow-[0_0_24px_rgba(127,105,247,.2)]" onClick={() => setLight(!light)}>{light ? <Moon size={18} aria-hidden="true"/> : <Sun size={18} aria-hidden="true"/>}</button>
         <Button to="/contact" variant="primary" showIcon={false} className="hidden min-h-11 px-5 text-xs sm:inline-flex">Let's talk</Button>
         <button type="button" className="focus-ring grid size-11 shrink-0 place-items-center rounded-full text-[var(--text)] md:hidden" aria-label={open ? 'Close navigation menu' : 'Open navigation menu'} aria-expanded={open} aria-controls="mobile-menu" onClick={() => setOpen(!open)}>{open ? <X size={22} aria-hidden="true"/> : <Menu size={22} aria-hidden="true"/>}</button>

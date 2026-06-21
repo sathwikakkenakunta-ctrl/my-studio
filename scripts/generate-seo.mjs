@@ -1,0 +1,13 @@
+import { readFile, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+const root=resolve(import.meta.dirname,'..');
+const siteUrl=(process.env.VITE_SITE_URL||(process.env.VERCEL_PROJECT_PRODUCTION_URL?`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`:'https://my-studio-sathwik.vercel.app')).replace(/\/$/,'');
+const today=new Date().toISOString().slice(0,10);
+const [projectSource,articleSource]=await Promise.all([readFile(resolve(root,'src/data/content.ts'),'utf8'),readFile(resolve(root,'src/data/articles.ts'),'utf8')]);
+const projects=[...projectSource.matchAll(/slug:\s*'([^']+)'/g)].map(m=>m[1]);
+const posts=[...articleSource.matchAll(/slug:'([^']+)'/g)].map(m=>m[1]);
+const fixed=[['/','weekly','1.0'],['/about','monthly','.8'],['/projects','weekly','.9'],['/services','monthly','.8'],['/blog','weekly','.9'],['/contact','yearly','.7'],['/faq','monthly','.6'],['/pricing','monthly','.6'],['/privacy','yearly','.2'],['/terms','yearly','.2']];
+const routes=[...fixed,...projects.map(slug=>[`/project/${slug}`,'monthly','.8']),...posts.map(slug=>[`/blog/${slug}`,'monthly','.7'])];
+const xml=`<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${routes.map(([path,changefreq,priority])=>`  <url><loc>${siteUrl}${path==='/'?'':path}</loc><lastmod>${today}</lastmod><changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`).join('\n')}\n</urlset>\n`;
+await Promise.all([writeFile(resolve(root,'public/sitemap.xml'),xml),writeFile(resolve(root,'public/robots.txt'),`User-agent: *\nAllow: /\n\nSitemap: ${siteUrl}/sitemap.xml\nHost: ${siteUrl}\n`)]);
+console.log(`Generated sitemap with ${routes.length} indexable URLs for ${siteUrl}`);
