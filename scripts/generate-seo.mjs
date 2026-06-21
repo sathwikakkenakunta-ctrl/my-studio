@@ -1,7 +1,7 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 const root=resolve(import.meta.dirname,'..');
-const siteUrl=(process.env.VITE_SITE_URL||(process.env.VERCEL_PROJECT_PRODUCTION_URL?`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`:'https://my-studio-sathwik.vercel.app')).replace(/\/$/,'');
+const siteUrl=(process.env.VITE_SITE_URL||(process.env.VERCEL_PROJECT_PRODUCTION_URL?`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`:'https://sathwik-studio.vercel.app')).replace(/\/$/,'');
 const today=new Date().toISOString().slice(0,10);
 const [projectSource,articleSource]=await Promise.all([readFile(resolve(root,'src/data/content.ts'),'utf8'),readFile(resolve(root,'src/data/articles.ts'),'utf8')]);
 const projects=[...projectSource.matchAll(/slug:\s*'([^']+)'/g)].map(m=>m[1]);

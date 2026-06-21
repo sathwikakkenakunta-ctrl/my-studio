@@ -6,7 +6,7 @@ export const site = {
   location: 'Telangana, India',
   email: 'sathwikakkenakunta@gmail.com',
   github: 'https://github.com/sathwikakkenakunta-ctrl',
-  url: (import.meta.env.VITE_SITE_URL || 'https://my-studio-sathwik.vercel.app').replace(/\/$/, ''),
+  url: (import.meta.env.VITE_SITE_URL || 'https://sathwik-studio.vercel.app').replace(/\/$/, ''),
   locale: 'en_IN',
   themeColor: '#09090c',
   ogImage: '/og/sathwik-dev.png',

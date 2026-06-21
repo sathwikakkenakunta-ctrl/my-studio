@@ -1,7 +1,7 @@
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 const root=resolve(import.meta.dirname,'..');
-const siteUrl=(process.env.VITE_SITE_URL||(process.env.VERCEL_PROJECT_PRODUCTION_URL?`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`:'https://my-studio-sathwik.vercel.app')).replace(/\/$/,'');
+const siteUrl=(process.env.VITE_SITE_URL||(process.env.VERCEL_PROJECT_PRODUCTION_URL?`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`:'https://sathwik-studio.vercel.app')).replace(/\/$/,'');
 const [template,projectsSource,articlesSource]=await Promise.all([readFile(resolve(root,'dist/index.html'),'utf8'),readFile(resolve(root,'src/data/content.ts'),'utf8'),readFile(resolve(root,'src/data/articles.ts'),'utf8')]);
 const pages=[
 {path:'/',title:'Sathwik Akkenakunta — Full Stack Web Developer',description:'Sathwik Akkenakunta is a Full Stack Web Developer building premium websites, responsive dashboards, and scalable SaaS applications.'},
