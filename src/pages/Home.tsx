@@ -9,43 +9,82 @@ import { Reveal } from '../components/ui/Reveal';
 import { Container, SectionHeading } from '../components/ui/Section';
 import { Seo } from '../components/ui/Seo';
 import { site } from '../data/site';
-import { GradientBlob, SectionGlow } from '../components/ui/Visual';
 
 export default function Home() {
   const reduceMotion = useReducedMotion();
+
   return <><Seo title={site.name} />
-    <section className="color-section relative min-h-[780px] overflow-hidden pt-32 sm:min-h-[860px] sm:pt-44">
-      <div className="grid-bg absolute inset-0 opacity-20"/><GradientBlob tone="violet" className="-left-28 top-20 size-[28rem]"/><GradientBlob tone="cyan" className="right-[-10rem] top-36 size-[34rem]"/><GradientBlob tone="pink" className="bottom-[-12rem] left-[42%] size-80"/><SectionGlow className="left-[25%] top-[-28rem]"/>
+    <section className="color-section relative overflow-hidden border-b border-[var(--border)] pt-28 sm:pt-40">
+      <div className="grid-bg absolute inset-0 opacity-30"/>
       <Container className="relative">
-        <div className="grid items-end gap-12 lg:grid-cols-[1fr_280px]">
-          <div><span className="eyebrow">{site.role} · {site.location}</span><h1 className="mt-7 max-w-6xl font-display text-[clamp(3.5rem,9.5vw,9.2rem)] font-medium leading-[.86] tracking-[-.07em]">Hi, I'm Sathwik.<br/><span className="gradient-text">I build for the web.</span></h1></div>
-          <div className="pb-3"><p className="text-lg leading-8 text-[var(--muted)]">{site.tagline} Thoughtfully designed, responsive, and engineered to perform.</p><div className="mt-8 flex flex-wrap gap-3"><Button to="/contact" variant="primary">Let's work together</Button><Button to="/case-studies" variant="secondary">View my work</Button></div></div>
+        <div className="grid items-end gap-10 pb-12 sm:pb-16 lg:grid-cols-[1fr_360px]">
+          <div>
+            <span className="eyebrow">{site.role} / {site.location}</span>
+            <h1 className="mt-6 max-w-5xl font-display text-[clamp(2.75rem,9vw,8.4rem)] font-semibold leading-[.94] tracking-[-.045em]">Clear, fast websites built to bring leads.</h1>
+          </div>
+          <div className="pb-2">
+            <p className="text-lg leading-8 text-[var(--muted)]">{site.tagline}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button href={site.whatsappUrl} variant="primary">WhatsApp</Button>
+              <Button to="/case-studies" variant="secondary">View work</Button>
+            </div>
+          </div>
         </div>
-        <div className="mt-20 flex items-center justify-between gap-4 border-t border-[var(--border)] pt-5 text-[11px] font-bold uppercase tracking-[.14em] text-[var(--muted)]"><span>Design · Development · Performance</span><a className="focus-ring flex shrink-0 items-center gap-2 rounded" href="#work">Explore <ArrowDown size={14}/></a></div>
+        <div className="flex items-center justify-between gap-4 border-t border-[var(--border)] py-5 text-[11px] font-bold uppercase tracking-[.14em] text-[var(--muted)]">
+          <span>Design / Development / Performance</span>
+          <a className="focus-ring flex shrink-0 items-center gap-2 rounded" href="#work">Explore <ArrowDown size={14}/></a>
+        </div>
       </Container>
     </section>
 
-    <section className="border-y border-[var(--border)] py-7"><Container><div className="flex flex-wrap items-center justify-between gap-5 text-sm font-bold text-[var(--muted)]"><span className="text-[10px] uppercase tracking-[.16em]">Core toolkit</span>{site.skills.slice(0,6).map(x=><span className="font-display tracking-[-.03em]" key={x}>{x}</span>)}</div></Container></section>
+    <section className="border-b border-[var(--border)] bg-white py-6">
+      <Container><div className="flex flex-wrap items-center justify-between gap-5 text-sm font-bold text-[var(--muted)]"><span className="text-[10px] uppercase tracking-[.16em]">Core toolkit</span>{site.skills.slice(0,6).map(x=><span className="font-display" key={x}>{x}</span>)}</div></Container>
+    </section>
 
-    <section id="work" className="py-28 sm:py-36"><Container><SectionHeading eyebrow="Selected work" title={<>Built to perform.<br/>Designed to <span className="text-violet">stay with you.</span></>} text="Complete products across healthcare, restaurants, real estate, and appointment scheduling—designed and built from interface to deployment."/>
-      <div className="mt-16 grid gap-5 lg:grid-cols-2">{projects.slice(0,4).map((p,i)=><Reveal key={p.slug} delay={(i%2)*.08}><Link to={`/project/${p.slug}`} className="glass-card focus-ring group block overflow-hidden rounded-3xl">
-        <div className="relative aspect-[16/10] overflow-hidden bg-[var(--surface-2)]"><img src={p.image} alt={`${p.title} responsive web application interface preview`} width="1440" height="980" loading="lazy" decoding="async" className="h-full w-full object-cover object-top transition duration-700 group-hover:scale-[1.035]"/><div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"/><span className="absolute left-4 top-4 rounded-full border border-white/20 bg-black/50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-white backdrop-blur-md">{p.status}</span><div className="absolute bottom-4 right-4 grid size-12 place-items-center rounded-full shadow-xl transition group-hover:-translate-y-1 group-hover:translate-x-1" style={{background:p.color,color:'#09090c'}}><ArrowUpRight/></div></div>
-        <div className="flex items-end justify-between gap-5 p-6 sm:p-8"><div><span className="text-xs text-[var(--muted)]">{p.number} / {p.type}</span><h3 className="mt-2 font-display text-3xl font-medium tracking-[-.04em]">{p.title}</h3></div><span className="text-right text-xs font-bold" style={{color:p.color}}>{p.result}</span></div>
-      </Link></Reveal>)}</div><div className="mt-10 text-center"><Button to="/case-studies" variant="outline">View all projects</Button></div>
-    </Container></section>
+    <section id="work" className="py-20 sm:py-28">
+      <Container>
+        <SectionHeading eyebrow="Selected work" title={<>Simple products.<br/>Strong <span className="text-violet">first impressions.</span></>} text="A few responsive builds across healthcare, restaurants, real estate, and scheduling."/>
+        <div className="mt-16 grid gap-5 lg:grid-cols-2">{projects.slice(0,4).map((p,i)=><Reveal key={p.slug} delay={(i%2)*.08}><Link to={`/project/${p.slug}`} className="glass-card focus-ring group block overflow-hidden rounded-2xl">
+          <div className="relative aspect-[16/10] overflow-hidden bg-[var(--surface-2)]">
+            <img src={p.image} alt={`${p.title} responsive web application interface preview`} width="1440" height="980" loading="lazy" decoding="async" className="h-full w-full object-cover object-top transition duration-700 group-hover:scale-[1.025]"/>
+            <span className="absolute left-4 top-4 rounded-full bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-[.12em] text-[var(--text)] shadow">{p.status}</span>
+            <div className="absolute bottom-4 right-4 grid size-12 place-items-center rounded-full bg-white shadow-lg transition group-hover:-translate-y-1 group-hover:translate-x-1" style={{color:p.color}}><ArrowUpRight/></div>
+          </div>
+          <div className="flex items-end justify-between gap-5 p-6 sm:p-8"><div><span className="text-xs text-[var(--muted)]">{p.number} / {p.type}</span><h3 className="mt-2 font-display text-3xl font-medium">{p.title}</h3></div><span className="text-right text-xs font-bold" style={{color:p.color}}>{p.result}</span></div>
+        </Link></Reveal>)}</div>
+        <div className="mt-10 text-center"><Button to="/case-studies" variant="outline">View all projects</Button></div>
+      </Container>
+    </section>
 
-    <section className="color-section py-24 sm:py-32"><SectionGlow className="-right-72 top-20"/><Container className="relative"><SectionHeading eyebrow="Capabilities" title={<>One developer for<br/><span className="text-cyan">complete digital products.</span></>}/><div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{services.map((s,i)=><Reveal key={s.title} delay={(i%3)*.06} className="h-full"><div className="glass-card group h-full rounded-3xl p-7 sm:p-9"><span className="icon-glass"><s.icon size={20}/></span><span className="mt-14 block text-xs text-[var(--muted)]">0{i+1}</span><h3 className="mt-3 font-display text-2xl font-medium">{s.title}</h3><p className="mt-4 text-sm leading-6 text-[var(--muted)]">{s.text}</p></div></Reveal>)}</div></Container></section>
+    <section className="color-section border-y border-[var(--border)] bg-[var(--surface-2)] py-20 sm:py-28">
+      <Container className="relative">
+        <SectionHeading eyebrow="Capabilities" title={<>One developer for<br/><span className="text-cyan">clear digital work.</span></>}/>
+        <div className="mt-14 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{services.map((s,i)=><Reveal key={s.title} delay={(i%3)*.06} className="h-full"><div className="glass-card group h-full rounded-2xl p-7 sm:p-8"><span className="icon-glass"><s.icon size={20}/></span><span className="mt-10 block text-xs text-[var(--muted)]">0{i+1}</span><h3 className="mt-3 font-display text-2xl font-medium">{s.title}</h3><p className="mt-4 text-sm leading-6 text-[var(--muted)]">{s.text}</p></div></Reveal>)}</div>
+      </Container>
+    </section>
 
-    <section className="py-24 sm:py-32"><Container><div className="grid gap-16 lg:grid-cols-[.8fr_1.2fr]"><div><SectionHeading eyebrow="How I work" title={<>No black box.<br/>Just <span className="text-violet">good momentum.</span></>} text="A visible, collaborative process that resolves uncertainty early and keeps every week useful."/><Button to="/about" variant="outline" className="mt-8">My approach</Button></div><div className="space-y-3">{process.slice(0,6).map(([n,t,d])=><div key={n} className="glass-card grid gap-3 rounded-2xl p-5 sm:grid-cols-[50px_140px_1fr] sm:p-6"><span className="text-xs text-violet">{n}</span><h3 className="font-display text-lg font-medium">{t}</h3><p className="text-sm leading-6 text-[var(--muted)]">{d}</p></div>)}</div></div></Container></section>
+    <section className="py-20 sm:py-28">
+      <Container><div className="grid gap-12 lg:grid-cols-[.8fr_1.2fr]"><div><SectionHeading eyebrow="How I work" title={<>Clear steps.<br/><span className="text-violet">Fast decisions.</span></>} text="Plan, design, build, test, and launch without making the process feel heavy."/><Button to="/about" variant="outline" className="mt-8">My approach</Button></div><div className="space-y-3">{process.slice(0,5).map(([n,t,d])=><div key={n} className="glass-card grid gap-3 rounded-2xl p-5 sm:grid-cols-[50px_140px_1fr] sm:p-6"><span className="text-xs text-violet">{n}</span><h3 className="font-display text-lg font-medium">{t}</h3><p className="text-sm leading-6 text-[var(--muted)]">{d}</p></div>)}</div></div></Container>
+    </section>
 
-    <section className="color-section overflow-hidden border-y border-[var(--glass-border)] py-10" aria-label="Technology stack"><motion.div className="flex w-max gap-4" animate={reduceMotion ? undefined : {x:['0%','-50%']}} transition={reduceMotion ? undefined : {duration:35,repeat:Infinity,ease:'linear'}}>{[...technologies,...technologies].map((t,i)=><span key={`${t}${i}`} className="rounded-full border border-[var(--glass-border)] bg-[var(--glass)] px-6 py-3 font-display text-xl text-[var(--muted)] shadow-[inset_0_1px_0_var(--glass-highlight)] backdrop-blur-md">{t}</span>)}</motion.div></section>
+    <section className="color-section overflow-hidden border-y border-[var(--border)] py-8" aria-label="Technology stack">
+      <motion.div className="flex w-max gap-3" animate={reduceMotion ? undefined : {x:['0%','-50%']}} transition={reduceMotion ? undefined : {duration:35,repeat:Infinity,ease:'linear'}}>{[...technologies,...technologies].map((t,i)=><span key={`${t}${i}`} className="rounded-full border border-[var(--border)] bg-white px-5 py-2.5 font-display text-lg text-[var(--muted)]">{t}</span>)}</motion.div>
+    </section>
 
-    <section className="py-24 sm:py-32"><Container><SectionHeading eyebrow="Why work with me" title={<>Focused craft.<br/><span className="text-cyan">No unnecessary layers.</span></>} /><div className="mt-14 grid gap-5 md:grid-cols-3">{principles.map((p,i)=><Reveal delay={i*.08} key={p.title}><div className="glass-card h-full rounded-3xl p-8"><span className="icon-glass"><p.icon size={20}/></span><h3 className="mt-14 font-display text-2xl">{p.title}</h3><p className="mt-4 leading-7 text-[var(--muted)]">{p.text}</p></div></Reveal>)}</div><div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">{[['10','core skills'],['100%','responsive'],['A11y','built in'],['Fast','by default']].map(([v,l])=><div className="glass-card rounded-2xl p-7 sm:p-9" key={l}><strong className="font-display text-3xl font-medium text-violet sm:text-5xl">{v}</strong><span className="mt-3 block text-xs text-[var(--muted)]">{l}</span></div>)}</div></Container></section>
+    <section className="py-20 sm:py-28">
+      <Container><SectionHeading eyebrow="Why work with me" title={<>Focused craft.<br/><span className="text-cyan">No extra noise.</span></>} /><div className="mt-14 grid gap-5 md:grid-cols-3">{principles.map((p,i)=><Reveal delay={i*.08} key={p.title}><div className="glass-card h-full rounded-2xl p-8"><span className="icon-glass"><p.icon size={20}/></span><h3 className="mt-10 font-display text-2xl">{p.title}</h3><p className="mt-4 leading-7 text-[var(--muted)]">{p.text}</p></div></Reveal>)}</div><div className="mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">{[['10','core skills'],['100%','responsive'],['A11y','built in'],['Fast','by default']].map(([v,l])=><div className="glass-card rounded-2xl p-7 sm:p-9" key={l}><strong className="font-display text-3xl font-medium text-violet sm:text-5xl">{v}</strong><span className="mt-3 block text-xs text-[var(--muted)]">{l}</span></div>)}</div></Container>
+    </section>
 
-    <section className="gradient-panel relative overflow-hidden py-24 sm:py-28"><GradientBlob tone="pink" className="-right-20 -top-32 size-96 opacity-30"/><Container className="relative"><Quote size={38} aria-hidden="true"/><blockquote className="mt-8 max-w-5xl font-display text-4xl font-medium leading-[1.08] tracking-[-.045em] sm:text-6xl">I turn complex product ideas into clear, fast, and polished web experiences people can use with confidence.</blockquote><div className="mt-9 flex items-center gap-4"><div className="grid size-12 place-items-center rounded-full border border-white/25 bg-black/25 text-sm font-bold text-white backdrop-blur-md">SA</div><div><b className="block text-sm">{site.name}</b><span className="text-xs text-white/75">{site.role} · {site.location}</span></div></div></Container></section>
+    <section className="gradient-panel relative overflow-hidden py-20 sm:py-24">
+      <Container className="relative"><Quote size={38} aria-hidden="true"/><blockquote className="mt-8 max-w-5xl font-display text-4xl font-medium leading-[1.08] sm:text-6xl">Your site should explain the value quickly, feel trustworthy, and make contacting you easy.</blockquote><div className="mt-9 flex flex-wrap items-center gap-4"><div className="grid size-12 place-items-center rounded-lg border border-white/25 bg-white/10 text-sm font-bold text-white">SA</div><div><b className="block text-sm">{site.name}</b><span className="text-xs text-white/75">{site.role} / {site.location}</span></div><Button href={site.whatsappUrl} variant="primary" className="bg-white text-[#1d3557] hover:bg-white">WhatsApp now</Button></div></Container>
+    </section>
 
-    <section className="py-24 sm:py-32"><Container><div className="flex items-end justify-between gap-6"><SectionHeading eyebrow="Field notes" title="Ideas for better digital work."/><Link to="/blog" className="focus-ring hidden rounded text-sm font-bold text-violet sm:block">View all notes →</Link></div><div className="mt-14 grid gap-5 md:grid-cols-3">{articles.slice(0,3).map((article,i)=><Reveal delay={i*.07} key={article.slug}><Link to={`/blog/${article.slug}`} className="glass-card focus-ring group block h-full rounded-3xl p-7"><div className="aspect-[16/10] rounded-2xl border border-[var(--glass-border)] bg-[linear-gradient(145deg,rgba(118,85,232,.2),rgba(13,148,211,.08))] p-5 shadow-inner"><span className="text-xs text-violet">0{i+1} / DEV NOTES</span><div className="mt-12 h-px w-full bg-[var(--border)]"/><div className="mt-3 h-px w-2/3 bg-[var(--border)]"/></div><p className="mt-6 text-xs text-[var(--muted)]">{article.category} · {article.readTime} min read</p><h3 className="mt-3 font-display text-xl font-medium group-hover:text-violet">{article.title}</h3></Link></Reveal>)}</div></Container></section>
+    <section className="py-20 sm:py-28">
+      <Container><div className="flex items-end justify-between gap-6"><SectionHeading eyebrow="Field notes" title="Ideas for better digital work."/><Link to="/blog" className="focus-ring hidden rounded text-sm font-bold text-violet sm:block">View all notes -&gt;</Link></div><div className="mt-14 grid gap-5 md:grid-cols-3">{articles.slice(0,3).map((article,i)=><Reveal delay={i*.07} key={article.slug}><Link to={`/blog/${article.slug}`} className="glass-card focus-ring group block h-full rounded-2xl p-7"><div className="aspect-[16/10] rounded-2xl border border-[var(--border)] bg-[#eef4ff] p-5"><span className="text-xs text-violet">0{i+1} / DEV NOTES</span><div className="mt-12 h-px w-full bg-[var(--border)]"/><div className="mt-3 h-px w-2/3 bg-[var(--border)]"/></div><p className="mt-6 text-xs text-[var(--muted)]">{article.category} / {article.readTime} min read</p><h3 className="mt-3 font-display text-xl font-medium group-hover:text-violet">{article.title}</h3></Link></Reveal>)}</div></Container>
+    </section>
 
-    <section className="color-section border-t border-[var(--glass-border)] py-28 sm:py-36"><SectionGlow className="-left-72 top-20"/><Container className="relative"><div className="grid gap-14 lg:grid-cols-[.7fr_1.3fr]"><SectionHeading eyebrow="FAQs" title={<>Good questions.<br/><span className="text-violet">Straight answers.</span></>}/><Accordion items={faqs.slice(0,7)}/></div></Container></section>
+    <section className="color-section border-t border-[var(--border)] bg-[var(--surface-2)] py-20 sm:py-28">
+      <Container className="relative"><div className="grid gap-14 lg:grid-cols-[.7fr_1.3fr]"><SectionHeading eyebrow="FAQs" title={<>Good questions.<br/><span className="text-violet">Straight answers.</span></>}/><Accordion items={faqs.slice(0,6)}/></div></Container>
+    </section>
   </>;
 }
