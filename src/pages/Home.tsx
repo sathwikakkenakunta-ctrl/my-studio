@@ -1,6 +1,5 @@
 import { ArrowDown, ArrowUpRight, Quote } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { motion, useReducedMotion } from 'framer-motion';
 import { services, projects, process, technologies, principles, faqs } from '../data/content';
 import { articles } from '../data/articles';
 import { Accordion } from '../components/ui/Accordion';
@@ -11,8 +10,6 @@ import { Seo } from '../components/ui/Seo';
 import { site } from '../data/site';
 
 export default function Home() {
-  const reduceMotion = useReducedMotion();
-
   return <><Seo title={site.name} />
     <section className="color-section relative overflow-hidden border-b border-[var(--border)] pt-28 sm:pt-40">
       <div className="grid-bg absolute inset-0 opacity-30"/>
@@ -35,10 +32,6 @@ export default function Home() {
           <a className="focus-ring flex shrink-0 items-center gap-2 rounded" href="#work">Explore <ArrowDown size={14}/></a>
         </div>
       </Container>
-    </section>
-
-    <section className="border-b border-[var(--border)] bg-white py-6">
-      <Container><div className="flex flex-wrap items-center justify-between gap-5 text-sm font-bold text-[var(--muted)]"><span className="text-[10px] uppercase tracking-[.16em]">Core toolkit</span>{site.skills.slice(0,6).map(x=><span className="font-display" key={x}>{x}</span>)}</div></Container>
     </section>
 
     <section id="work" className="py-20 sm:py-28">
@@ -68,7 +61,7 @@ export default function Home() {
     </section>
 
     <section className="color-section overflow-hidden border-y border-[var(--border)] py-8" aria-label="Technology stack">
-      <motion.div className="flex w-max gap-3" animate={reduceMotion ? undefined : {x:['0%','-50%']}} transition={reduceMotion ? undefined : {duration:35,repeat:Infinity,ease:'linear'}}>{[...technologies,...technologies].map((t,i)=><span key={`${t}${i}`} className="rounded-full border border-[var(--border)] bg-white px-5 py-2.5 font-display text-lg text-[var(--muted)]">{t}</span>)}</motion.div>
+      <div className="marquee-track flex w-max gap-3">{[...technologies,...technologies].map((t,i)=><span key={`${t}${i}`} className="rounded-full border border-[var(--border)] bg-white px-5 py-2.5 font-display text-lg text-[var(--muted)]">{t}</span>)}</div>
     </section>
 
     <section className="py-20 sm:py-28">

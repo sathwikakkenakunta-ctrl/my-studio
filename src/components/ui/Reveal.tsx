@@ -1,7 +1,27 @@
-import type { ReactNode } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 
 export function Reveal({ children, delay = 0, className = '' }: { children: ReactNode; delay?: number; className?: string }) {
-  const reduce = useReducedMotion();
-  return <motion.div className={className} initial={reduce ? false : { opacity: 0, y: 18 }} whileInView={reduce ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true, amount: .12 }} transition={{ duration: .52, delay, ease: [.22, 1, .36, 1] }}>{children}</motion.div>;
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    if (!('IntersectionObserver' in window)) {
+      const frame = globalThis.requestAnimationFrame(() => setVisible(true));
+      return () => globalThis.cancelAnimationFrame(frame);
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setVisible(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.12 });
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return <div ref={ref} className={`reveal ${visible ? 'is-visible' : ''} ${className}`} style={{ '--reveal-delay': `${delay}s` } as CSSProperties}>{children}</div>;
 }
