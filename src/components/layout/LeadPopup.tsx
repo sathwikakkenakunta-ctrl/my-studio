@@ -21,8 +21,9 @@ export function LeadPopup() {
 
   if (!visible || dismissed) return null;
 
-  return <aside className="fixed bottom-3 left-3 right-3 z-[65] mx-auto max-w-[20rem] rounded-2xl border border-[var(--border)] bg-white p-3 shadow-[0_18px_42px_rgba(38,31,20,.16)] sm:left-auto sm:right-5 sm:mx-0" aria-label="Project greeting">
-    <button type="button" className="focus-ring absolute right-2.5 top-2.5 grid size-7 place-items-center rounded-full bg-[var(--surface-2)] text-[var(--muted)] transition hover:text-[var(--text)]" aria-label="Close greeting" onClick={close}><X size={14} aria-hidden="true"/></button>
+  return <div className="fixed inset-0 z-[65] grid place-items-center bg-black/20 px-4 py-6" role="presentation">
+  <aside className="relative w-full max-w-[20rem] rounded-2xl border border-[var(--border)] bg-white p-3 shadow-[0_24px_70px_rgba(38,31,20,.22)]" aria-label="Project greeting">
+    <button type="button" className="focus-ring absolute right-2 top-2 grid size-11 place-items-center rounded-full bg-white text-[var(--text)] shadow-md ring-1 ring-[var(--border)] transition hover:bg-[var(--surface-2)]" aria-label="Close greeting" onClick={close}><X size={22} strokeWidth={2.4} aria-hidden="true"/></button>
 
     <div className="overflow-hidden rounded-xl bg-[#eef4ff] p-3">
       <div className="flex items-center justify-between gap-2">
@@ -48,9 +49,10 @@ export function LeadPopup() {
       <p className="mt-1.5 text-xs leading-5 text-[var(--muted)]">Simple, fast pages for websites, dashboards, and SaaS ideas.</p>
     </div>
 
-    <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-      <Button href={site.whatsappUrl} variant="primary" className="min-h-10 w-full px-3 py-2 text-xs" showIcon={false}><MessageCircle size={14} aria-hidden="true"/>WhatsApp</Button>
-      <Button href={`mailto:${site.email}`} variant="secondary" className="min-h-10 w-full px-3 py-2 text-xs" showIcon={false}><Mail size={14} aria-hidden="true"/>Email</Button>
+    <div className="mt-3 flex justify-start gap-2">
+      <Button href={site.whatsappUrl} variant="primary" className="min-h-9 px-3 py-1.5 text-[11px]" showIcon={false}><MessageCircle size={13} aria-hidden="true"/>WhatsApp</Button>
+      <Button href={`mailto:${site.email}`} variant="secondary" className="min-h-9 px-3 py-1.5 text-[11px]" showIcon={false}><Mail size={13} aria-hidden="true"/>Email</Button>
     </div>
-  </aside>;
+  </aside>
+  </div>;
 }
